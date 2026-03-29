@@ -6,10 +6,10 @@
   const JAKE_SCREEN_X = 120;
   const LEVEL_LENGTH  = 8000;
   const STORE_WORLD_X = 7500;
-  const GRAVITY       = 1800;  // px/s²
-  const JUMP_FORCE    = -720;  // px/s (upward)
-  const SPEED_INITIAL = 280;
-  const SPEED_MAX     = 540;
+  const GRAVITY       = 1600;  // px/s²
+  const JUMP_FORCE    = -750;  // px/s (upward)
+  const SPEED_INITIAL = 220;
+  const SPEED_MAX     = 380;
 
   const OBSTACLE_DEFS = {
     rock:      { width: 30, height: 28 },
@@ -84,13 +84,13 @@
       let minGap, maxGap;
       let types;
       if (progress < 0.25) {
-        minGap = 350; maxGap = 500; types = ['rock','small_box'];
+        minGap = 480; maxGap = 650; types = ['rock','small_box'];
       } else if (progress < 0.5) {
-        minGap = 280; maxGap = 420; types = ['rock','small_box','barrel'];
+        minGap = 400; maxGap = 560; types = ['rock','small_box','barrel'];
       } else if (progress < 0.75) {
-        minGap = 220; maxGap = 360; types = ['rock','barrel','tall_box','boulder'];
+        minGap = 340; maxGap = 480; types = ['rock','barrel','tall_box','boulder'];
       } else {
-        minGap = 180; maxGap = 300; types = ['small_box','barrel','tall_box','boulder'];
+        minGap = 300; maxGap = 420; types = ['small_box','barrel','tall_box','boulder'];
       }
 
       cursor += rng(minGap, maxGap);
@@ -99,9 +99,9 @@
       obstacles.push({ worldX: cursor, type, width: def.width, height: def.height });
       cursor += def.width;
 
-      // Occasional back-to-back pair in later zones
-      if (progress > 0.6 && Math.random() < 0.25) {
-        cursor += rng(60, 100);
+      // Occasional back-to-back pair only near the very end
+      if (progress > 0.85 && Math.random() < 0.15) {
+        cursor += rng(200, 280);
         const type2 = types[rngInt(0, types.length - 1)];
         const def2  = OBSTACLE_DEFS[type2];
         obstacles.push({ worldX: cursor, type: type2, width: def2.width, height: def2.height });
@@ -647,18 +647,18 @@
 
   // ─── Collision Detection ──────────────────────────────────────────────────
   function checkCollisions() {
-    const jx = jake.screenX + 6;
-    const jy = jake.y + 4;
-    const jw = jake.width - 12;
-    const jh = jake.height - 8;
+    const jx = jake.screenX + 9;
+    const jy = jake.y + 6;
+    const jw = jake.width - 18;
+    const jh = jake.height - 14;
 
     for (const obs of obstacles) {
       const sx = obs.worldX - camera.x;
       if (sx > CANVAS_WIDTH || sx + obs.width < 0) continue;
-      const ox = sx + 3;
-      const oy = GROUND_Y - obs.height + 2;
-      const ow = obs.width - 6;
-      const oh = obs.height - 2;
+      const ox = sx + 5;
+      const oy = GROUND_Y - obs.height + 4;
+      const ow = obs.width - 10;
+      const oh = obs.height - 6;
       if (jx < ox + ow && jx + jw > ox && jy < oy + oh && jy + jh > oy) {
         triggerDeath();
         return;
