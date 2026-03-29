@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Jake's Pizza Jump!</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+
+    <!-- Start Screen -->
+    <div id="start-screen" class="screen">
+      <h1>🍕 JAKE'S PIZZA JUMP!</h1>
+      <h2>Help Jake reach Little Caesars!</h2>
+      <p class="subtitle">Jump over obstacles to get your pizza!</p>
+      <button class="btn" id="startBtn">PLAY!</button>
+      <p class="hint">SPACE / Click / Tap to jump</p>
+    </div>
+
+    <!-- Win Screen -->
+    <div id="win-screen" class="screen hidden">
+      <h1>🍕 YOU MADE IT! 🍕</h1>
+      <h2>Jake got his pizza!</h2>
+      <div class="stat" id="win-distance">Distance: 0m</div>
+      <div class="stat" id="win-time">Time: 0s</div>
+      <button class="btn" id="playAgainBtn">PLAY AGAIN!</button>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameover-screen" class="screen hidden">
+      <h1>OH NO!</h1>
+      <h2>Jake didn't make it...</h2>
+      <div class="stat" id="gameover-distance">Distance: 0m</div>
+      <p class="subtitle">So close to the pizza!</p>
+      <button class="btn" id="tryAgainBtn">TRY AGAIN!</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
